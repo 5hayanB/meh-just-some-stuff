@@ -13,6 +13,20 @@ namespace
     TfLiteTensor* output = nullptr;
     constexpr int kTensorArenaSize = 100 * 1024;
     static uint8_t tensor_arena[kTensorArenaSize];
+
+    // Functions
+    TfLiteStatus GetImage(
+        tflite::ErrorReporter* error_reporter,
+        int width,
+        int height,
+        int channels,
+        int8_t* data,
+        const uint8_t* image,
+        size_t bytes
+    ){
+        memcpy(data, image, bytes);
+        return kTfLiteOk;
+    }
 }  // namespace
 
 void setup(void)
@@ -73,7 +87,9 @@ void infer(void)
 
 int main(void)
 {
+    printf("Initializing setup");
     setup();
+    printf("Model has been ");
     infer();
 
     return 0;
